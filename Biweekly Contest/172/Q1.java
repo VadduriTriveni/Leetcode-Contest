@@ -1,5 +1,30 @@
 class Solution {
     public int minOperations(int[] nums) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int num: nums){
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        int idx = -1;
+        for(int i=0; i<nums.length; i++){
+            if(map.containsKey(nums[i]) && map.get(nums[i]) >= 2){
+                map.put(nums[i], map.get(nums[i]) - 1);
+                if(map.get(nums[i]) == 0){
+                    map.remove(nums[i]);
+                }
+                idx = i;
+            }
+        }
+        if(idx == -1) return 0;
+        int cnt = idx + 1;
+        int mod = cnt % 3;
+        if(mod == 0) return cnt/3;
+        return cnt/3 + 1;
+    }
+}
+========================================
+
+class Solution {
+    public int minOperations(int[] nums) {
 
         Set<Integer> seen = new HashSet<>();
         int i = nums.length - 1;
